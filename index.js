@@ -1,9 +1,10 @@
-const express = require("express");
-const { WebhookClient } = require("dialogflow-fulfillment");
-const app = express();
-const getRoomCondition = require("./functions/getRoomCondition");
+import express, { json } from "express";
+import { WebhookClient } from "dialogflow-fulfillment";
+import getRoomCondition from "./functions/getRoomCondition";
 
-app.use(express.json());
+const app = express();
+
+app.use(json());
 app.get("/", (req, res) => {
   res.send("Server Is Working......");
 });
@@ -22,7 +23,8 @@ app.post("/webhook", (req, res) => {
   agent.handleRequest(intentMap);
 });
 function respondRoomCondition(agent) {
-  getRoomCondition();
+  let roomCondition = await getRoomCondition();
+  agent.add(roomCondition);
 }
 /**
  * now listing the server on port number 3000 :)
