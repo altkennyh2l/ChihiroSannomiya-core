@@ -11,7 +11,6 @@ const options = {
 
 function getRoomCondition() {
   let result = [];
-  let resp = "";
   request(options, function (error, response, body) {
     let res = JSON.parse(body);
     if (res.message === "success") {
@@ -23,7 +22,7 @@ function getRoomCondition() {
       );
     }
   });
-  return resp;
+  agent.end("");
 }
 
 module.exports = getRoomCondition;
