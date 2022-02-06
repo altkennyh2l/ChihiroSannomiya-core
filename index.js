@@ -36,7 +36,7 @@ async function respondRoomCondition(agent) {
 async function respondISSLocation(agent) {
   let ISSLocation = await getISSLocation();
   agent.add(
-    `国際宇宙ステーション（ISS）はただいま(${ISSLocation[0]},${ISSLocation[1]})に居ます。かなり早いスピードで回ってるよ！`
+    `国際宇宙ステーション（ISS）はただいま(${ISSLocation[0]}, ${ISSLocation[1]})に居ます。かなり早いスピードで回ってるよ！`
   );
 }
 
