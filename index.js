@@ -22,7 +22,7 @@ app.post("/webhook", (req, res) => {
   agent.handleRequest(intentMap);
 });
 function respondRoomCondition(agent) {
-  agent.add(getRoomCondition);
+  getRoomCondition();
 }
 /**
  * now listing the server on port number 3000 :)
