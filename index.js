@@ -1,6 +1,6 @@
 import express, { json } from "express";
 import { WebhookClient } from "dialogflow-fulfillment";
-import getRoomCondition from "./functions/getRoomCondition";
+import getRoomCondition from "./functions/getRoomCondition.js";
 
 const app = express();
 
@@ -22,7 +22,7 @@ app.post("/webhook", (req, res) => {
   // now agent is handle request and pass intent map
   agent.handleRequest(intentMap);
 });
-function respondRoomCondition(agent) {
+async function respondRoomCondition(agent) {
   let roomCondition = await getRoomCondition();
   agent.add(roomCondition);
 }
