@@ -48,6 +48,6 @@ async function respondAstrosCountNow(agent) {
 }
 
 app.listen(process.env.PORT || 3000, () => {
-  wakeDyno("https://cs-webhook.herokuapp.com/");
+  wakeDyno("https://cs-webhook.herokuapp.com/").start();
   console.log("Server is Running on port 3000");
 });
