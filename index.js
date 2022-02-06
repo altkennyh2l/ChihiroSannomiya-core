@@ -1,6 +1,7 @@
 import express, { json } from "express";
 import { WebhookClient } from "dialogflow-fulfillment";
 import getRoomCondition from "./functions/getRoomCondition.js";
+import { wakeDyno, wakeDynos } from "heroku-keep-awake";
 
 const app = express();
 
@@ -30,5 +31,6 @@ async function respondRoomCondition(agent) {
  * now listing the server on port number 3000 :)
  * */
 app.listen(process.env.PORT || 3000, () => {
+  wakeDyno("https://cs-webhook.herokuapp.com/");
   console.log("Server is Running on port 3000");
 });
