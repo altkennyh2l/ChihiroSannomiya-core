@@ -19,7 +19,7 @@ app.post("/webhook", (req, res) => {
   // now agent is handle request and pass intent map
   agent.handleRequest(intentMap);
 });
-function handleWebHookIntent(agent) {
+function respondRoomCondition(agent) {
   agent.add("This is a test response.");
 }
 /**
