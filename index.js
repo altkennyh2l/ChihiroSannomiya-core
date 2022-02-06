@@ -1,6 +1,8 @@
 import express, { json } from "express";
 import { WebhookClient } from "dialogflow-fulfillment";
 import getRoomCondition from "./functions/getRoomCondition.js";
+import getISSLocation from "./functions/getISSLocation.js";
+import getAstrosCountNow from "./functions/getAstrosCountNow.js";
 import { wakeDyno, wakeDynos } from "heroku-keep-awake";
 
 const app = express();
@@ -20,16 +22,31 @@ app.post("/webhook", (req, res) => {
   let intentMap = new Map();
   // add intent map 2nd parameter pass function
   intentMap.set("webhook_roomCondition", respondRoomCondition);
+  intentMap.set("webhook_ISSLocation", respondISSLocation);
+  intentMap.set("webhook_astrosCountNow", respondAstrosCountNow);
   // now agent is handle request and pass intent map
   agent.handleRequest(intentMap);
 });
+
 async function respondRoomCondition(agent) {
   let roomCondition = await getRoomCondition();
   agent.add(roomCondition);
 }
-/**
- * now listing the server on port number 3000 :)
- * */
+
+async function respondISSLocation(agent) {
+  let ISSLocation = await getISSLocation();
+  agent.add(
+    `国際宇宙ステーション（ISS）はただいま(${ISSLocation[0]},${ISSLocation[1]})に居ます。かなり早いスピードで回ってるよ！`
+  );
+}
+
+async function respondAstrosCountNow(agent) {
+  let astrosCountNow = await getAstrosCountNow();
+  agent.add(
+    `黒く広い宇宙の中に、今${astrosCountNow}人も居ますよ！静かだけど、寂しくはないね！`
+  );
+}
+
 app.listen(process.env.PORT || 3000, () => {
   wakeDyno("https://cs-webhook.herokuapp.com/");
   console.log("Server is Running on port 3000");
