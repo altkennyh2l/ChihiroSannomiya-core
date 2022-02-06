@@ -1,6 +1,9 @@
 const express = require("express");
 const { WebhookClient } = require("dialogflow-fulfillment");
 const app = express();
+const dotenv = require("dotenv").config();
+const request = require("request");
+
 app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Server Is Working......");
@@ -20,7 +23,28 @@ app.post("/webhook", (req, res) => {
   agent.handleRequest(intentMap);
 });
 function respondRoomCondition(agent) {
-  agent.add("This is a test response.");
+  const switchbotOptions = {
+    url: process.env.SWITCHBOT_METER_URL,
+    method: "get",
+    headers: {
+      Authorization: process.env.SWITCHBOT_TOKEN,
+    },
+  };
+
+  let result = [];
+  let switchbotResponse;
+  request(switchbotOptions, function (error, response, body) {
+    let res = JSON.parse(body);
+    if (res.message === "success") {
+      result = [res.body.temperature, res.body.humidity];
+      switchbotResponse = `現在部屋の温度は${result[0]}度で、湿度は${result[1]}%です。`;
+    } else {
+      switchbotResponse =
+        "API応答エラーです。暫くたってからまた聞いてみてください。。。";
+    }
+  });
+
+  agent.add(switchbotResponse);
 }
 /**
  * now listing the server on port number 3000 :)
