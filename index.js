@@ -1,6 +1,6 @@
 import express, { json } from "express";
 import { WebhookClient } from "dialogflow-fulfillment";
-import { Text } from "dialogflow-fulfillment";
+import { Text, Image } from "dialogflow-fulfillment";
 import getRoomCondition from "./functions/getRoomCondition.js";
 import getISSLocation from "./functions/getISSLocation.js";
 import getAstrosCountNow from "./functions/getAstrosCountNow.js";
@@ -47,10 +47,11 @@ async function respondAstrosCountNow(agent) {
 }
 
 async function respondPompompurinTweet(agent) {
-  let tweetContent = getLatestTweetFromUser("purin_sanrio");
+  let tweetContent = await getLatestTweetFromUser("purin_sanrio");
   agent.add(
     new Text(`@Purin_Sanrioがこれをツイートしました：${tweetContent[0]}`)
   );
+  agent.add(new Image(tweetContent[1]));
 }
 
 app.listen(process.env.PORT || 3000, () => {
