@@ -13,14 +13,14 @@ export default async function getLatestTweet(screenName) {
   const gettingScreenNameResponse = await gettingScreenName.json();
   let userID = await gettingScreenNameResponse.data.id;
 
-  const response = await fetch(
+  const gettingTweetResponse = await fetch(
     `https://api.twitter.com/2/users/${userID}/tweets?exclude=retweets&expansions=attachments.media_keys&media.fields=preview_image_url,url`,
     {
       method: "get",
       headers: { Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}` },
     }
   );
-  const data = await response.json();
-  let result = await [data.data[0].text, data.includes.media[0].url];
+  const tweet = await gettingTweetResponse.json();
+  let result = await [tweet.data[0].text, tweet.includes.media[0].url];
   return result;
 }
