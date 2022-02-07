@@ -47,6 +47,7 @@ async function respondAstrosCountNow(agent) {
 }
 
 async function respondPompompurinTweet(agent) {
+<<<<<<< HEAD
   let tweetContent = await getLatestTweetFromUser("purin_sanrio");
   agent.add(
     Text(
@@ -55,6 +56,11 @@ async function respondPompompurinTweet(agent) {
       )}`
     )
   );
+=======
+  let tweetContent = getLatestTweetFromUser("purin_sanrio");
+  agent.add(Text(`@Purin_Sanrioがこれをツイートしました：${tweetContent[0]}`));
+  agent.add(Image(tweetContent[1]));
+>>>>>>> parent of 3d7a0bf (oh i have to wait)
 }
 
 app.listen(process.env.PORT || 3000, () => {
