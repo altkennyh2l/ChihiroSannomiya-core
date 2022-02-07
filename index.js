@@ -55,7 +55,7 @@ async function respondPompompurinTweet(agent) {
       )}`
     )
   );
-  agent.add(Image(JSON.stringify(tweetContent[1])));
+  agent.add(Image(`${JSON.stringify(tweetContent[1])}`));
 }
 
 app.listen(process.env.PORT || 3000, () => {
