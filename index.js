@@ -3,6 +3,7 @@ import { WebhookClient } from "dialogflow-fulfillment";
 import getRoomCondition from "./functions/getRoomCondition.js";
 import getISSLocation from "./functions/getISSLocation.js";
 import getAstrosCountNow from "./functions/getAstrosCountNow.js";
+import getLatestTweetFromUser from "./functions/getLatestTweetFromUser.js";
 import { wakeDyno, wakeDynos } from "heroku-keep-awake";
 
 const app = express();
@@ -11,20 +12,17 @@ app.use(json());
 app.get("/", (req, res) => {
   res.send("Server Is Working......");
 });
-/**
- * on this route dialogflow send the webhook request
- * For the dialogflow we need POST Route.
- * */
+
 app.post("/webhook", (req, res) => {
-  // get agent from request
   let agent = new WebhookClient({ request: req, response: res });
-  // create intentMap for handle intent
+
   let intentMap = new Map();
-  // add intent map 2nd parameter pass function
+
   intentMap.set("webhook_roomCondition", respondRoomCondition);
   intentMap.set("webhook_ISSLocation", respondISSLocation);
   intentMap.set("webhook_astrosCountNow", respondAstrosCountNow);
-  // now agent is handle request and pass intent map
+  intentMap.set("webhook_getPompompurinTweet", respondPompompurinTweet);
+
   agent.handleRequest(intentMap);
 });
 
@@ -45,6 +43,14 @@ async function respondAstrosCountNow(agent) {
   agent.add(
     `黒く広い宇宙の中に、今${astrosCountNow}人も居ますよ！静かだけど、寂しくはないね！`
   );
+}
+
+async function respondPompompurinTweet(agent) {
+  let tweetContent = getLatestTweetFromUser("purin_sanrio");
+  agent.add([
+    Text(`@Purin_Sanrioがこれをツイートしました：${tweetContent[0]}`),
+    Image(tweetContent[1]),
+  ]);
 }
 
 app.listen(process.env.PORT || 3000, () => {
