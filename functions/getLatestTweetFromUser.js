@@ -11,7 +11,7 @@ export default async function getLatestTweet(screenName) {
   );
 
   const gettingScreenNameResponse = await gettingScreenName.json();
-  let userID = gettingScreenNameResponse.data.id;
+  let userID = await gettingScreenNameResponse.data.id;
 
   const response = await fetch(
     `https://api.twitter.com/2/users/${userID}/tweets?exclude=retweets&expansions=attachments.media_keys&media.fields=preview_image_url,url`,
@@ -21,6 +21,6 @@ export default async function getLatestTweet(screenName) {
     }
   );
   const data = await response.json();
-  let result = [data.data[0].text, data.includes.media[0].url];
+  let result = await [data.data[0].text, data.includes.media[0].url];
   return result;
 }
