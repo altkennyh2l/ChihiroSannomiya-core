@@ -57,6 +57,7 @@ app.listen(process.env.PORT || 3000, () => {
   wakeDyno("https://cs-webhook.herokuapp.com/", {
     interval: 20,
     logging: true,
+    stopTimes: { start: "00:00", end: "00:01" },
   });
   console.log("Server is Running on port 3000");
 });
