@@ -1,6 +1,6 @@
 import express, { json } from "express";
 import { WebhookClient } from "dialogflow-fulfillment";
-import { Text, Image, Payload, Card } from "dialogflow-fulfillment";
+import { Text } from "dialogflow-fulfillment";
 import getRoomCondition from "./functions/getRoomCondition.js";
 import getISSLocation from "./functions/getISSLocation.js";
 import getAstrosCountNow from "./functions/getAstrosCountNow.js";
