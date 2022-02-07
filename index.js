@@ -51,7 +51,7 @@ async function respondPompompurinTweet(agent) {
   agent.add(
     new Text(`@Purin_Sanrioがこれをツイートしました：${tweetContent[0]}`)
   );
-  agent.add(new Image(tweetContent[1]));
+  agent.add(new Image(JSON.stringify(tweetContent[1])));
 }
 
 app.listen(process.env.PORT || 3000, () => {
