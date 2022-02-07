@@ -47,10 +47,8 @@ async function respondAstrosCountNow(agent) {
 
 async function respondPompompurinTweet(agent) {
   let tweetContent = getLatestTweetFromUser("purin_sanrio");
-  agent.add([
-    Text(`@Purin_Sanrioがこれをツイートしました：${tweetContent[0]}`),
-    Image(tweetContent[1]),
-  ]);
+  agent.add(Text(`@Purin_Sanrioがこれをツイートしました：${tweetContent[0]}`));
+  agent.add(Image(tweetContent[1]));
 }
 
 app.listen(process.env.PORT || 3000, () => {
