@@ -23,6 +23,7 @@ app.post("/webhook", (req, res) => {
   intentMap.set("webhook_ISSLocation", respondISSLocation);
   intentMap.set("webhook_astrosCountNow", respondAstrosCountNow);
   intentMap.set("webhook_getPompompurinTweet", respondPompompurinTweet);
+  intentMap.set("webhook_getCinnamonTweet", respondCinnamonTweet);
 
   agent.handleRequest(intentMap);
 });
@@ -50,6 +51,14 @@ async function respondPompompurinTweet(agent) {
   let tweetContent = await getLatestTweetFromUser("purin_sanrio");
   agent.add(
     new Text(`@Purin_Sanrioがこれをツイートしました：${tweetContent[0]}`)
+  );
+  agent.add(new Image(tweetContent[1]));
+}
+
+async function respondCinnamonTweet(agent) {
+  let tweetContent = await getLatestTweetFromUser("cinnamon_sanrio");
+  agent.add(
+    new Text(`@Cinnamon_Sanrioがこれをツイートしました：${tweetContent[0]}`)
   );
   agent.add(new Image(tweetContent[1]));
 }
